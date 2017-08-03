@@ -1,0 +1,22 @@
+{
+  "name": "express-sapui5",
+  "version": "1.0.0",
+  "description": "\"# express-sapui5\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThePlenkov/express-sapui5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThePlenkov/express-sapui5/issues"
+  },
+  "homepage": "https://github.com/ThePlenkov/express-sapui5#readme",
+  "devDependencies": {
+    "express": "^4.15.3"
+  }
+}
