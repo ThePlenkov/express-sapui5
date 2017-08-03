@@ -2,8 +2,11 @@
 
 const proxy = require('http-proxy-middleware');
 const url = require('url');
+const express = require('express');
 
-module.exports = function (app, oNeoApp, oDestinations, oManifest, oAgent) {
+module.exports = function (oNeoApp, oDestinations, oManifest, oAgent) {
+
+    var app = express();
 
     if (oDestinations && oNeoApp && oNeoApp.routes) {
         oNeoApp.routes.forEach(function (oRoute) {
