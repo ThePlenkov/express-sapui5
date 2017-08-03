@@ -43,7 +43,7 @@ module.exports = function (oNeoApp, oDestinations, oManifest, oAgent) {
     }
 
     //redirect by default to launchpad
-    if (oNeoApp && oNeoApp.welcomeFile & oManifest & oManifest["sap.app"]) {
+    if (oNeoApp && oNeoApp.welcomeFile && oManifest && oManifest["sap.app"]) {
         app.get('/', function (req, res) {
             res.redirect(url.format({
                 pathname: oNeoApp.welcomeFile,
