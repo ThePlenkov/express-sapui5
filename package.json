@@ -16,7 +16,8 @@
     "url": "https://github.com/ThePlenkov/express-sapui5/issues"
   },
   "homepage": "https://github.com/ThePlenkov/express-sapui5#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "express": "^4.15.3"
   }
 }
