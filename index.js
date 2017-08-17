@@ -4,7 +4,14 @@ const proxy = require('http-proxy-middleware');
 const url = require('url');
 const express = require('express');
 
-module.exports = function (oNeoApp, oDestinations, oManifest, oAgent) {
+module.exports = function (
+    oSettings
+) {
+
+    var oNeoApp = oSettings.neoApp,
+        oDestinations = oSettings.destinations,
+        oManifest = oSettings.manifest,
+        oAgent = oSettings.agent;
 
     var app = express();
 
@@ -43,16 +50,25 @@ module.exports = function (oNeoApp, oDestinations, oManifest, oAgent) {
     }
 
     //redirect by default to launchpad
-    if (oNeoApp && oNeoApp.welcomeFile && oManifest && oManifest["sap.app"]) {
+    if (oNeoApp && oNeoApp.welcomeFile) {
         app.get('/', function (req, res) {
-            res.redirect(url.format({
-                pathname: oNeoApp.welcomeFile,
-                query: {
-                    "sap-ushell-test-url-url": "../../../../../webapp",
-                    "sap-ushell-test-url-additionalInformation": "SAPUI5.Component=" + oManifest["sap.app"].id
-                },
-                hash: "Test-url"
-            }));
+
+            var oURL = {
+                pathname: oNeoApp.welcomeFile
+            };
+
+            if (oManifest && oManifest["sap.app"]) {
+                Object.assign(oURL, {
+                    query: {
+                        "sap-ushell-test-url-url": "../../../../../webapp",
+                        "sap-ushell-test-url-additionalInformation": "SAPUI5.Component=" + oManifest["sap.app"].id
+                    },
+                    hash: "Test-url"
+
+                });
+            }
+
+            res.redirect(url.format(oURL));
         });
     }
 
