@@ -47,7 +47,7 @@ module.exports = function (
 
                 } else if (oRoute.path && oTarget.entryPath) {
 
-                    app.use(oRoute.path)
+                    app.route(oRoute.path)
                         .get(function (req, res) {
                             res.redirect(oTarget.entryPath);
                         });
