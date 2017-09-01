@@ -49,7 +49,7 @@ module.exports = function (
 
                     app.route(oRoute.path + '/:path')
                         .get(function (req, res) {
-                            res.redirect(oTarget.entryPath + req.param.path);
+                            res.redirect(oTarget.entryPath + req.params.path);
                         });
 
                 }
