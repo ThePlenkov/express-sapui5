@@ -38,21 +38,16 @@ module.exports = function (
                         }
                     }
 
+                }
+
+                if (oRoute.path && oTarget.entryPath) {
                     var oRouteNew = {};
                     var sPathOld = "^" + oRoute.path;
                     oRouteNew[sPathOld] = oTarget.entryPath;
                     oOptions.pathRewrite = oRouteNew;
-
-                    app.use(oRoute.path, proxy(oOptions));
-
-                } else if (oRoute.path && oTarget.entryPath) {
-
-                    app.route(oRoute.path + '/:path')
-                        .get(function (req, res) {
-                            res.redirect(oTarget.entryPath + req.params.path);
-                        });
-
                 }
+
+                app.use(oRoute.path, proxy(oOptions));
 
             }
 
