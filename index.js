@@ -15,32 +15,39 @@ module.exports = function (
 
     var app = express();
 
-    if (oDestinations && oNeoApp && oNeoApp.routes) {
+    if (oNeoApp && oNeoApp.routes) {
         oNeoApp.routes.forEach(function (oRoute) {
+
             var oTarget = oRoute.target;
-            if (oTarget && oTarget.name) {
+            if (oTarget) {
 
-                var oDestination = oDestinations[oTarget.name];
-                if (oDestination) {
+                // proxy options
+                var oOptions = {};
 
+                // search for destination
+                if (oDestinations && oTarget.name) {
+                    var oDestination = oDestinations[oTarget.name];
+                    if (oDestination) {
+                        oOptions.target = oDestination.target;
+                        oOptions.changeOrigin = true;
+                        if (oDestination.useProxy) {
+                            oOptions.agent = oAgent;
+                        }
+                        if (oTarget.version) {
+                            oOptions.target = oOptions.target + "/" + oTarget.version;
+                        }
+                    }
+                }
+
+                // create route
+                if (oRoute.path && oTarget.entryPath) {
                     var oRouteNew = {};
                     var sPathOld = "^" + oRoute.path;
                     oRouteNew[sPathOld] = oTarget.entryPath;
+                    oOptions.pathRewrite = oRouteNew;
+                }
 
-                    var oOptions = {
-                        target: oDestination.target,
-                        changeOrigin: true,
-                        pathRewrite: oRouteNew
-                    };
-
-                    if (oDestination.useProxy) {
-                        oOptions.agent = oAgent;
-                    }
-
-                    if (oTarget.version) {
-                        oOptions.target = oOptions.target + "/" + oTarget.version;
-                    }
-
+                if (oOptions) {
                     app.use(oRoute.path, proxy(oOptions));
                 }
 
