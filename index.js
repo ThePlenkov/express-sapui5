@@ -37,18 +37,21 @@ module.exports = function (
                             oOptions.target = oOptions.target + "/" + oTarget.version;
                         }
                     }
-                }
 
-                // create route
-                if (oRoute.path && oTarget.entryPath) {
                     var oRouteNew = {};
                     var sPathOld = "^" + oRoute.path;
                     oRouteNew[sPathOld] = oTarget.entryPath;
                     oOptions.pathRewrite = oRouteNew;
-                }
 
-                if (oOptions) {
                     app.use(oRoute.path, proxy(oOptions));
+
+                } else if (oRoute.path && oTarget.entryPath) {
+
+                    app.use(oRoute.path)
+                        .get(function (req, res) {
+                            res.redirect(oTarget.entryPath);
+                        });
+
                 }
 
             }
