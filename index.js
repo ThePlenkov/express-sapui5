@@ -47,9 +47,9 @@ module.exports = function (
 
                 } else if (oRoute.path && oTarget.entryPath) {
 
-                    app.route(oRoute.path)
+                    app.route(oRoute.path + '/:path')
                         .get(function (req, res) {
-                            res.redirect(oTarget.entryPath);
+                            res.redirect(oTarget.entryPath + req.param.path);
                         });
 
                 }
