@@ -78,8 +78,8 @@ module.exports = function (
     }
 
     //static paths
-    ["appconfig", "webapp"].forEach(function (sPath) {
-        app.use("/" + sPath, express.static(sPath));
+    ["appconfig", "webapp"].concat(oSettings.static).forEach(function (sPath) {
+        if (sPath) app.use("/" + sPath, express.static(sPath));
     });
 
     return app;
