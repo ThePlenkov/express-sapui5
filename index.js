@@ -58,9 +58,10 @@ module.exports = function (
     if (oNeoApp && oNeoApp.welcomeFile) {
         app.get('/', function (req, res) {
 
-            var oURL = {
-                pathname: oNeoApp.welcomeFile
-            };
+            var oURL = Object.assign({
+                pathname: oNeoApp.welcomeFile,
+                query: oSettings.queryParams || {}
+            });
 
             if (oManifest && oManifest["sap.app"]) {
                 Object.assign(oURL, {
