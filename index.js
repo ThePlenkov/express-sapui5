@@ -5,6 +5,7 @@ const url = require("url");
 const express = require("express");
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const noCache = require("nocache");
 
 module.exports = function(oSettings) {
   var oNeoApp = oSettings.neoApp,
@@ -38,6 +39,9 @@ module.exports = function(oSettings) {
 
     res.send($.html());
   });
+
+  // no odata cache (including metadata)
+  app.use("/sap/opu", noCache());
 
   if (oNeoApp && oNeoApp.routes) {
     oNeoApp.routes.forEach(function(oRoute) {
@@ -75,6 +79,28 @@ module.exports = function(oSettings) {
       }
     });
   }
+
+  /* //redirect by default to launchpad
+  if (oNeoApp && oNeoApp.welcomeFile) {
+    app.get("/", function(req, res) {
+      var oURL = Object.assign({
+        pathname: oNeoApp.welcomeFile,
+        query: oSettings.queryParams || {}
+      });
+
+      if (oManifest && oManifest["sap.app"]) {
+        Object.assign(oURL, {
+          query: {
+            "sap-ushell-test-url-url": "../../../../../webapp",
+            "sap-ushell-test-url-additionalInformation":
+              "SAPUI5.Component=" + oManifest["sap.app"].id
+          },
+          hash: "Test-url"
+        });
+      }
+
+      res.redirect(url.format(oURL));
+    }); */
 
   //static paths
   ["appconfig", "webapp"].concat(oSettings.static).forEach(function(sPath) {
