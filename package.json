@@ -1,6 +1,6 @@
 {
   "name": "express-sapui5",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "\"# express-sapui5\"",
   "main": "index.js",
   "scripts": {
