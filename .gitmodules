@@ -1,0 +1,3 @@
+[submodule "examples/sample_server"]
+	path = examples/sample_server
+	url = https://github.com/ThePlenkov/express-fiori-ws.git
