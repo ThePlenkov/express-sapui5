@@ -1,19 +1,15 @@
 "use strict";
 
 const proxy = require("http-proxy-middleware");
-const url = require("url");
-const express = require("express");
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const noCache = require("nocache");
 
-module.exports = function(oSettings) {
+let serveUi5 = function(oSettings, app) {
   var oNeoApp = oSettings.neoApp,
     oDestinations = oSettings.destinations,
     oManifest = oSettings.manifest,
     oAgent = oSettings.agent;
-
-  var app = express();
 
   let cdn = oSettings.cdn || "https://ui5.sap.com";
   if (oSettings.version) {
@@ -80,32 +76,20 @@ module.exports = function(oSettings) {
     });
   }
 
-  /* //redirect by default to launchpad
-  if (oNeoApp && oNeoApp.welcomeFile) {
-    app.get("/", function(req, res) {
-      var oURL = Object.assign({
-        pathname: oNeoApp.welcomeFile,
-        query: oSettings.queryParams || {}
-      });
-
-      if (oManifest && oManifest["sap.app"]) {
-        Object.assign(oURL, {
-          query: {
-            "sap-ushell-test-url-url": "../../../../../webapp",
-            "sap-ushell-test-url-additionalInformation":
-              "SAPUI5.Component=" + oManifest["sap.app"].id
-          },
-          hash: "Test-url"
-        });
-      }
-
-      res.redirect(url.format(oURL));
-    }); */
-
   //static paths
   ["appconfig", "webapp"].concat(oSettings.static).forEach(function(sPath) {
     if (sPath) app.use("/" + sPath, express.static(sPath));
   });
 
   return app;
+};
+
+let bInitialized;
+
+module.exports = oSettings => (req, res, next) => {
+  if (!bInitialized) {
+    bInitialized = true;
+    serveUi5(oSettings, req.app);
+  }
+  next();
 };
