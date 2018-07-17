@@ -1,3 +1,0 @@
-[submodule "test_resources/openui5-sample-app"]
-	path = test_resources/openui5-sample-app
-	url = https://github.com/SAP/openui5-sample-app
