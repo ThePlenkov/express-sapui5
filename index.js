@@ -76,11 +76,6 @@ let serveUi5 = function(oSettings, app) {
     });
   }
 
-  //static paths
-  ["appconfig", "webapp"].concat(oSettings.static).forEach(function(sPath) {
-    if (sPath) app.use("/" + sPath, express.static(sPath));
-  });
-
   return app;
 };
 
