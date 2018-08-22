@@ -52,6 +52,7 @@ let serveUi5 = function(oSettings, app) {
           if (oDestination) {
             oOptions.target = oDestination.target;
             oOptions.changeOrigin = true;
+            oOptions.secure = false;
             if (oDestination.useProxy) {
               oOptions.agent = oAgent;
             }
