@@ -29,9 +29,13 @@ let serveUi5 = function(oSettings, app) {
       agent: oAgent
     });
     const $ = cheerio.load(await flp.text());
-    $("#sap-ui-bootstrap").attr().src = cdn + "/resources/sap-ui-core.js";
-    $("#sap-ushell-bootstrap").attr().src =
-      cdn + "/test-resources/sap/ushell/bootstrap/sandbox.js";
+    if ($("#sap-ui-bootstrap").attr()) {
+      $("#sap-ui-bootstrap").attr().src = cdn + "/resources/sap-ui-core.js";
+    }
+    if ($("#sap-ushell-bootstrap").attr()) {
+      $("#sap-ushell-bootstrap").attr().src =
+        cdn + "/test-resources/sap/ushell/bootstrap/sandbox.js";
+    }
 
     res.send($.html());
   });
