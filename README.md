@@ -1,9 +1,7 @@
 ### [Custom containers](https://github.com/markdown-it/markdown-it-container)
 
-::: warning
-This repository has been migrated to Gitlab.org. Please follow this link for newer versions:
-https://gitlab.com/theplenkov-npm/express-sapui5
-:::
+`This repository has been migrated to Gitlab.org. Please follow this link for newer versions:
+https://gitlab.com/theplenkov-npm/express-sapui5`
 
 # SAPUI5 express middleware
 
