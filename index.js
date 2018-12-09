@@ -36,6 +36,11 @@ let serveUi5 = function(oSettings, app) {
       $("#sap-ushell-bootstrap").attr().src =
         cdn + "/test-resources/sap/ushell/bootstrap/sandbox.js";
     }
+    //standalone script
+    $('script[src="../../bootstrap/standalone.js"]').each((index, node) => {
+      node.attribs.src =
+        cdn + "/test-resources/sap/ushell/bootstrap/standalone.js";
+    });
 
     res.send($.html());
   });
